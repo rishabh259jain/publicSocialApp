@@ -17,6 +17,7 @@ Twitter, or GitHub.
 # Security Features
 * Secure Authentication and Authorization (Ex: JWT)
 * Strong and detailed Validation and Sanitization (Ex: High Secure password generation)
+* Safe files Storage using Amazon S3 Buckets
 * Encrypted and protected passwords storage
 * Deatailed Error Handling and Logging (10 differnet types of Error Code and Messages)
 
