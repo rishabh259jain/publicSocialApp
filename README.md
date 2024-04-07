@@ -19,6 +19,7 @@ Twitter, or GitHub.
 * Strong and detailed Validation and Sanitization (Ex: High Secure password generation)
 * Safe files Storage using Amazon S3 Buckets
 * Encrypted and protected passwords storage
+* Extensively Used node packages like winston, rate-limiter, cors, helment, session, etc..
 * Deatailed Error Handling and Logging (10 differnet types of Error Code and Messages)
 
 # How to Start
