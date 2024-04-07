@@ -21,6 +21,10 @@ Twitter, or GitHub.
 * Encrypted and protected passwords storage
 * Deatailed Error Handling and Logging (10 differnet types of Error Code and Messages)
 
+# How to Start
+1. npm i
+2. node .\bin\www
+
 # API Information
 1. router.post("/users/register",userController.register ); => API to register new user => Take input in body in JSON form => Input Example : { "userName": "rishabh123", "email": "rishabh@gmail.com", "password": "Rishabh@123", // optional "username": "rishabh123" // optional "bio" : "programmer for life"}
 
