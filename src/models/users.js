@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema(
     {
         phone: {type: String,},
-        username: { type: String},
+        name: { type: String},
         email: { type: String, required: true, unique: true},
         password: String, 
         bio: String,
@@ -23,7 +23,7 @@ const UserSchema = new Schema(
 
 UserSchema.post('save', function() {
   let data = this;
-  data.updateAt = new Date();
+  data.updatedAt = new Date();
 });
 
 module.exports = mongoose.model('users', UserSchema);

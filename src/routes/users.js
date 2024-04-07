@@ -14,7 +14,8 @@ router.use(jwt.verifyToken);
 router.post('/', user.getUser);
 router.post('/uploadProfile', user.uploadProfile);
 router.post('/getProfiles', user.getProfiles);
-router.post('/changePrivacy', user.changePrivacy);
+router.post('/changeProfile', user.changeProfile);
+router.post('/logout', (req,res,next)=> res.status(200).json({message: 'Logged out successfully'}));
 
 module.exports = router;
 
@@ -23,6 +24,6 @@ module.exports = router;
 // login,
 // uploadProfile,
 // socialLogin,
-// changePrivacy,
+// changeProfile,
 // getProfiles,
 // getUser,

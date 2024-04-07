@@ -26,7 +26,7 @@ async function register(req, res, next) {
   try {
     let {
       phone,
-      username,
+      name,
       email,
       password,
       bio,
@@ -41,7 +41,7 @@ async function register(req, res, next) {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       phone,
-      username,
+      name,
       email,
       password: hashedPassword,
       bio,
@@ -85,15 +85,15 @@ const socialLogin = async (req, res, next) => {
 
 async function login(req, res, next) {
   try {
-    const { username, password, email, provider, token } = req.body;
+    const { name, password, email, provider, token } = req.body;
     try {
       foundUser = await User.findOne({ email }).lean();
     } catch (error) {
-      return next(new AuthorizationError("Username or password do not match"));
+      return next(new AuthorizationError("email or password do not match"));
     }
 
     if (!foundUser || !(await bcrypt.compare(password, foundUser.password))) {
-      return next(new NotFoundError("Username or password do not match"));
+      return next(new NotFoundError("email or password do not match"));
     }
     req.user = foundUser;
     next();
@@ -132,13 +132,28 @@ async function uploadProfile(req, res, next) {
   }
 }
 
-async function changePrivacy(req, res, next) {
+async function changeProfile(req, res, next) {
   try {
-    const { email } = req.body;
-    await User.findOneAndUpdate({ email }, { $set: { isPublic: true } });
-    res.status(200).json({ message: "Profile public success" });
+    let { phone, name, email, password, bio, isAdmin, isPublic } = req.body;
+    let user = await User.findOne({ email }).lean();
+    if (!user) return next(new OperationalError("No user in the database"));
+    const hashedPassword = await bcrypt.hash(password, 10);
+    if(phone) user.phone = phone;
+    if(name) user.name = name;
+    if(email) user.email = email;
+    if(password) user.password = hashedPassword;
+    if(bio) user.bio = bio;
+    if(isAdmin!=null) user.isAdmin = isAdmin;
+    if(isPublic!=null) user.isPublic = isPublic;
+    let changedUser = await User.findOneAndUpdate({ email }, {...user}).lean();
+    res
+      .status(200)
+      .json({
+        message: "Profile updated Successfully",
+        user: { ...changedUser, password: undefined },
+      });
   } catch (error) {
-    res.status(500).json({ error: "Error changing privacy settings" });
+    return next(error);
   }
 }
 
@@ -176,7 +191,7 @@ async function getUser(req, res, next) {
     return res.status(200).json({
       status: "success",
       message: "User found successfully",
-      userDetails: {...user, password: undefined},
+      userDetails: { ...user, password: undefined },
     });
   } catch (err) {
     return next(new DatabaseError("Error in fetching user Info"));
@@ -188,7 +203,7 @@ module.exports = {
   login,
   uploadProfile,
   socialLogin,
-  changePrivacy,
+  changeProfile,
   getProfiles,
   getUser,
 };
