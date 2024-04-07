@@ -40,7 +40,7 @@ Twitter, or GitHub.
 7. router.post('/logout', (req,res,next)=> res.status(200).json({message: 'Logged out successfully'})); => Authorized API to Logout => Client should do localStorage.removeItem('accessToken'); 
 
 
-#Future Improvements
+# Future Improvements
 * Use API,SECRET key Authentication for ultimate account security.
 * Use Websockets for real-time updates.
 * Use ICP protocol file storage.
