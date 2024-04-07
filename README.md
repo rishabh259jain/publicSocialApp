@@ -1,4 +1,4 @@
-# privateSocialApp
+# publicSocialApp
 Secure and Authenticated Backend App with ability to Register, Login, Change Profile and View other public profiles.
 
 User Stories:
